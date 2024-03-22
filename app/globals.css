@@ -17,14 +17,14 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
+  color: black;
+  /* background: linear-gradient(
       to bottom,
       transparent,
       rgb(var(--background-end-rgb))
     )
-    rgb(var(--background-start-rgb));
-  padding: 1rem;
+    rgb(var(--background-start-rgb)); */
+  min-height: 100vh;
 }
 
 @layer utilities {
