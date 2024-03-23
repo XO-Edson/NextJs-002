@@ -4,23 +4,23 @@ import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 
 export default function Search() {
-  const [Search, setSearch] = useState("");
+  const [search, setSearch] = useState("");
   const router = useRouter();
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    router.push(`${search}`);
     setSearch("");
-    router.push(`/${Search}/`);
-  }
+  };
 
   return (
     <form
-      onSubmit={handleSubmit}
       className=" w-50 flex justify-center md:justify-between"
+      onSubmit={handleSubmit}
     >
       <input
         type="text"
-        value={Search}
+        value={search}
         onChange={(e) => setSearch(e.target.value)}
         placeholder="Search..."
         className=" p-2 border-none rounded-xl

@@ -1,5 +1,5 @@
 import getWikiResults from "@/lib/getWikiResults";
-import Item from "./components/item";
+import React from "react";
 
 type Props = {
   params: {
@@ -7,37 +7,25 @@ type Props = {
   };
 };
 
-export async function generateMetadata({ params: { searchTerm } }: Props) {
-  const wikiData: Promise<SearchResult> = getWikiResults(searchTerm);
-  const data = await wikiData;
+export default async function page({ params: { searchTerm } }: Props) {
+  const searchResults: Promise<SearchResult> = getWikiResults(searchTerm);
 
-  const displayTerm = searchTerm.replaceAll("%20", "");
-
-  if (!data)
-    return {
-      title: `${displayTerm} Not Found`,
-    };
-
-  return {
-    title: displayTerm,
-    description: `Search results for ${displayTerm}`,
-  };
-}
-
-export default async function SearchResults({ params: { searchTerm } }: Props) {
-  const wikiData: Promise<SearchResult> = getWikiResults(searchTerm);
-  const data = await wikiData;
+  const data = await searchResults;
 
   const results: Result[] | undefined = data?.query?.pages;
 
   return (
-    <main className="bg-slate-200 mx-auto max-w-lg py-1 min-h-screen">
+    <main>
       {results ? (
-        Object.values(results).map((result, index) => {
-          return <Item key={result.pageid} result={result} />;
+        Object.values(results).map((result) => {
+          return (
+            <div>
+              <h2>{result.title}</h2>
+            </div>
+          );
         })
       ) : (
-        <h2>{`${searchTerm} not found!`}</h2>
+        <h2>`${searchTerm} Not Found`</h2>
       )}
     </main>
   );
